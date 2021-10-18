@@ -83,6 +83,6 @@ curl -X POST 'http://scale-2021-k8s-workshop.yandex.cloud/translate?to=en' --dat
 Слева выберем раздел _Мониторинг_, слева вверху временной интервал _1h_, увидим, что наши запросы отобразились на
 метриках.
 
-### [cледующий этап >>>](../7_blue_green_deploy_using_application_load_balancer/README.md)
+### [cледующий этап >>>](../7_blue_green_balancing/README.md)
 
 
