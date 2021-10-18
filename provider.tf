@@ -3,11 +3,11 @@ terraform {
     yandex = {
       source = "yandex-cloud/yandex"
     }
+    null   = {}
   }
 }
 
 provider "yandex" {
-  token = "" // FIXME: make required variable
-  folder_id = var.folder_id
-  zone = local.zone
+  folder_id = local.folder_id
+  token     = local.yc_token
 }

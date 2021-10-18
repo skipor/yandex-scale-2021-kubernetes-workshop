@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: workshop
+  name: translate
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: translate
+  template:
+    metadata:
+      labels:
+        app: translate
+    spec:
+      containers:
+      - name: translate
+        image: "cr.yandex/crpgmk1om0r2bpav6nqj/translate:v1"
+        imagePullPolicy: Always
+        args:
+        - "--service-account-key=/run/translate/secrets/key.json"
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: service-account-key
+          # Размещаем секрет в in-memory файловой системе '/run'
+          mountPath: "/run/translate/secrets"
+          readOnly: true
+        # Поскольку образ собрал FROM scratch, а приложение обращается по HTTPS в другие сервисы,
+        # необходимо смонтировать Certificate Authorities с узла.
+        - name: ca-certs
+          mountPath: /etc/ssl/certs
+          readOnly: true
+      volumes:
+      - name: service-account-key
+        secret:
+          secretName: translate-sa-key
+      - name: ca-certs
+        hostPath:
+          path: /etc/ssl/certs
+          type: DirectoryOrCreate
+
+

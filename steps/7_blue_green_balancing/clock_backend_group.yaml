@@ -1,0 +1,19 @@
+apiVersion: alb.yc.io/v1alpha1
+kind: HttpBackendGroup
+metadata:
+  namespace: workshop
+  name: clock
+spec:
+  backends:
+  - name: green
+    weight: 100
+    service:
+      name: clock-green
+      port:
+        number: 80
+  - name: blue
+    weight: 0
+    service:
+      name: clock-blue
+      port:
+        number: 80

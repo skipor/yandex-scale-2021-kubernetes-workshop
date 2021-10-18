@@ -1,0 +1,5 @@
+bases:
+- ../base
+nameSuffix: "-green"
+commonLabels:
+  colour: green

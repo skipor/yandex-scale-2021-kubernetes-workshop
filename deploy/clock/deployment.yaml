@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: workshop
+  name: clock
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: clock
+  template:
+    metadata:
+      labels:
+        app: clock
+    spec:
+      containers:
+      - name: clock
+        image: "cr.yandex/crpgmk1om0r2bpav6nqj/clock:v1"
+        ports:
+        - containerPort: 80

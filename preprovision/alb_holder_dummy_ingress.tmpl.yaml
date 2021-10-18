@@ -1,0 +1,39 @@
+# Применение этого файла заставляет ALB предварительно создаться.
+# Во время воркшопа эти объекты перезапишутся.
+
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: workshop
+  name: clock
+spec:
+  selector:
+    app: clock
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: workshop
+  namespace: workshop
+  annotations:
+    ingress.alb.yc.io/group-name: workshop
+    ingress.alb.yc.io/external-ipv4-address: ALB_IP
+    ingress.alb.yc.io/subnets: SUBNET
+spec:
+  rules:
+  - host: precreates-alb.yandex.cloud
+    http:
+      paths:
+      - path: /precreates-application-load-balacner
+        pathType: Prefix
+        backend:
+          service:
+            name: clock
+            port:
+              number: 80

@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: workshop
+  namespace: workshop
+  annotations:
+    ingress.alb.yc.io/group-name: workshop
+    ingress.alb.yc.io/external-ipv4-address: 178.154.234.197 # FIXME
+    ingress.alb.yc.io/subnets: b0c78c5hls59ci7q6pe6 # FIXME
+spec:
+  rules:
+  # Хосты для примера, у нас нет DNS записей на них. Поэтому обращаться нужно как:
+  #   curl -H "Host: scale-2021-kubernetes-workshop.yandex.cloud" http://178.154.234.197/
+  - host: scale-2021-k8s-workshop.yandex.cloud
+    http:
+      paths:
+      - path: /clock
+        pathType: Prefix
+        backend:
+          service:
+            name: clock
+            port:
+              number: 80
+  - host: scale-2021-k8s-workshop.yandex.cloud # Хост для примера
+    http:
+      paths:
+      - path: /translate
+        pathType: Prefix
+        backend:
+          service:
+            name: translate
+            port:
+              number: 80

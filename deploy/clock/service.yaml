@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: workshop
+  name: clock
+spec:
+  selector:
+    app: clock
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80

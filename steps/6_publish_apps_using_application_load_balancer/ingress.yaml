@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: workshop
+  namespace: workshop
+  annotations:
+    ingress.alb.yc.io/group-name: workshop
+    ingress.alb.yc.io/external-ipv4-address: ALB_IP
+    ingress.alb.yc.io/subnets: SUBNET
+spec:
+  rules:
+  # Хосты для примера, у нас нет DNS записей на них. Поэтому обращаться нужно как:
+  #   curl -H "Host: scale-2021-k8s-workshop.yandex.cloud" "http://${ALB_IP:?}/clock"
+  - host: scale-2021-k8s-workshop.yandex.cloud
+    http:
+      paths:
+      - path: /clock
+        pathType: Prefix
+        backend:
+          service:
+            name: clock
+            port:
+              number: 80
+  - host: scale-2021-k8s-workshop.yandex.cloud
+    http:
+      paths:
+      - path: /translate
+        pathType: Prefix
+        backend:
+          service:
+            name: translate
+            port:
+              number: 80
