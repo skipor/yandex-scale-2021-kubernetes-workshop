@@ -101,8 +101,7 @@ rm -rf .terraform terraform.tfstate terraform.tfstate.backup
 # Проверим, что план пуст - state успешно загружен из удалённого хранилища
 terraform plan
 
-# Заметка: Есть несколько мест, где терраформу кажется, что поле `labels` поменялось с nil на {} (пустой объект) вне терраформа. 
-# Это недоработка нашего терраформ провайдера, которую нужно поправить.
+echo "Замечание: предупреждение 'Note: Objects have changed outside of Terraform; + labels = {}' недоработка terraform provider :)"
 ```
 
 Готово!
