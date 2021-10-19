@@ -76,53 +76,48 @@ echo "В конфиг yc CLI добавлен ID каталога: '$(yc config 
 
 ### [cледующий этап >>>](../2_terraform_import_existing_resources/README.md)
 
-Образ доступен во время проведения практикума. Если вы выполняете задание после окончания практикума, пропустите этот
-шаг. Вы можете самостоятельно подготовить аналогичный образ или подготовить
-окружение [по инструкции](../../README.md#настройка-окружения)
+Образ доступен во время проведения практикума.
+Если вы выполняете задание после окончания практикума, пропустите этот шаг.
+Вы можете самостоятельно подготовить аналогичный образ или подготовить окружение [по инструкции](../../README.md#настройка-окружения) 
 
-1. Убедитесь, что у вас есть SSH-ключ или сгенерируйте новый (
-   подробная [инструкция](https://cloud.yandex.ru/docs/compute/operations/vm-connect/ssh#creating-ssh-keys)).
-```bash
-ssh-keygen -t rsa -b 4096 # генерация нового ssh-ключа
+1. Убедитесь, что у вас есть SSH-ключ или сгенерируйте новый (подробная [инструкция](https://cloud.yandex.ru/docs/compute/operations/vm-connect/ssh#creating-ssh-keys)).
+```
+ssh-keygen -t rsa -b 2048 # генерация нового ssh-ключа
+>>>>>>> add vm instruction
 cat ~/.ssh/id_rsa.pub
 ```
 
 2. Создайте виртуальную машину с помощью yc
-```bash
+```
 IMAGE_ID=$(yc compute image get yandex-scale-2021-kubernetes-workshop --folder-name public-image --format json | jq -r .id)
 yc compute instance create --name workshop-vm \
- --create-boot-disk image-id="${IMAGE_ID:?}",size=60 \
+ --create-boot-disk image-id="${IMAGE_ID:?}" \
  --public-ip \
- --ssh-key ~/.ssh/id_rsa.pub --zone ru-central1-a
+ --ssh-key ~/.ssh/id_rsa.pub --zone ru-central1-c
 ```
 3. Скопируйте публичный IP адрес
-```bash
+```
 IP_ADDRESS=$(yc compute instance get workshop-vm --format json | jq -r '.network_interfaces[0].primary_v4_address.one_to_one_nat.address')
 ```
 4. Скопируйте свой конфиг yc на ВМ:
-```bash
-ssh yc-user@$IP_ADDRESS sudo mkdir -p /home/yc-user/.config/yandex-cloud
-scp ~/.config/yandex-cloud/config.yaml yc-user@$IP_ADDRESS:/home/yc-user/.config/yandex-cloud/config.yaml
+```
+ssh yc-user@${IP_ADDRESS:?} mkdir -p /home/yc-user/.config/yandex-cloud
+scp ~/.config/yandex-cloud/config.yaml yc-user@${IP_ADDRESS:?}:/home/yc-user/.config/yandex-cloud/config.yaml
 ```
 5. Войдите на созданную ВМ по SSH
-```bash
-ssh yc-user@$IP_ADDRESS
+```
+ssh yc-user@${IP_ADDRESS:?}
 ```
 6. Проверьте, что на ВМ работает yc
-```bash
+```
 yc compute instance list
 ```
-7. Перейдите в директорию со скачанным репозиторием и обновите его;
-```bash
-cd /opt/yandex-scale-2021-kubernetes-workshop && git pull
+7. Скачайте репозиторий и перейдите в него;
 ```
-
-Дальнейшие команды выполняйте на созданной ВМ. Когда понадобится дополнительно окно терминала, откройте новую
-вкладку/окно терминала, и там сделайте:
-```bash
-ssh yc-user@$IP_ADDRESS
-cd /opt/yandex-scale-2021-kubernetes-workshop
+git clone https://github.com/skipor/yandex-scale-2021-kubernetes-workshop.git
+cd ./yandex-scale-2021-kubernetes-workshop
 ```
+. Дальнейшие команды выполняйте на созданной ВМ.
 
 ### [cледующий этап >>>](../2_terraform_import_existing_resources/README.md)
 

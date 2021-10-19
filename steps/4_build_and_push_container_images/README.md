@@ -33,7 +33,7 @@ terraform apply
 Аутентифицируем `docker`, для работы с Yandex Container Registry:
 
 ```bash 
-yc config get token | docker login --username oauth  --password-stdin cr.yandex
+yc container registry configure-docker
 ```
 
 ## Сборка, проверка и загрузка контейнерных образов в Container Registry
@@ -42,8 +42,8 @@ yc config get token | docker login --username oauth  --password-stdin cr.yandex
 
 Соберём образ контейнера и загрузим его в реестр.
 ```bash
-cat ./apps/clock/build_and_push_conatiner_image.sh
-CLOCK_IMG=$(./apps/clock/build_and_push_conatiner_image.sh v1)
+cat ./apps/clock/build_and_push_container_image.sh
+CLOCK_IMG=$(./apps/clock/build_and_push_container_image.sh v1)
 ```
 
 Проверим, что контейнер с приложением работает. Для этого в основном окне терминала запустим его, пробросив порт `80`:
@@ -62,9 +62,9 @@ curl 127.0.0.1:80
 
 ### Приложение `translate`
 
-Соберём образ контейнера и загрузим его в регистр:
+Соберём образ контейнера и загрузим его в реестр:
 ```bash
-TRANSLATE_IMG=$(./apps/translate/build_and_push_conatiner_image.sh v1)
+TRANSLATE_IMG=$(./apps/translate/build_and_push_container_image.sh v1)
 ```
 
 Попробуем запустить образ:

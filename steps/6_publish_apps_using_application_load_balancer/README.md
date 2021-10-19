@@ -63,7 +63,7 @@ cat steps/6_publish_apps_using_application_load_balancer/patch_etc_hosts.sh
 
 Запустим его под `sudo`, чтобы получить права на изменения `/etc/hosts`:
 ```bash
-sudo steps/6_publish_apps_using_application_load_balancer/patch_etc_hosts.sh
+steps/6_publish_apps_using_application_load_balancer/patch_etc_hosts.sh
 # Проверим результат:
 grep -e scale-2021-k8s-workshop.yandex.cloud /etc/hosts
 ping scale-2021-k8s-workshop.yandex.cloud -c 1 && echo 'Хост "scale-2021-k8s-workshop.yandex.cloud" успешно резолвится!'

@@ -6,7 +6,7 @@ REGISTRY=$(yc container registry get workshop --format json | jq .id -r)
 IMAGE="cr.yandex/${REGISTRY}/translate:${TAG}"
 
 cd "$(dirname "$0")"
-docker build . -t "$IMAGE"
+docker build . -t "$IMAGE" > /dev/stderr
 docker push "$IMAGE" > /dev/stderr
 
 echo "$IMAGE"
