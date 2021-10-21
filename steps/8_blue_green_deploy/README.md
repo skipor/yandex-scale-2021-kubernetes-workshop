@@ -26,7 +26,7 @@ cat ./steps/8_blue_green_deploy/load_clock_service.sh
 
 Соберём её и выложим в реестр контейнеров:
 ```bash
-./apps/clock/build_and_push_conatiner_image.sh broken
+./apps/clock/build_and_push_container_image.sh broken
 ```
 
 Переопределим образ в blue кастомизации и поднимем число реплик:
